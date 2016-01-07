@@ -12,6 +12,7 @@ var {
   StyleSheet,
   Text,
 	TextInput,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -43,10 +44,11 @@ var Notes = React.createClass({
 	          	automaticallyAdjustContentInsets={false}
 	          	keyboardDismissMode="on-drag"
 	          	keyboardShouldPersistTaps={true}
-	          	showsVerticalScrollIndicator={false}
+	          	showsVerticalScrollIndicator={true}
 		      	dataSource={this.state.dataSource}
-		      	renderRow={(rowData) => <Text>{rowData}</Text>}
-		    />
+				renderRow={this._renderRow}
+				style={styles.container}
+				/>
 		    <TextInput
 		      style={{height: 20, borderColor: 'gray', borderWidth: 1}}
 		      onChangeText={(text) => this.setState({text}
@@ -58,7 +60,24 @@ var Notes = React.createClass({
 	 	</View>
 		
 	  );
-	},	
+	},
+		
+	_renderRow: function(rowData: string) {
+	   
+	    return (
+	      <TouchableHighlight>
+	        <View>
+	          <View style={styles.row}>
+	            <Text style={styles.text}>
+	            	{rowData }
+	            </Text>
+	          </View>
+	          <View style={styles.separator} />
+	        </View>
+	      </TouchableHighlight>
+	    );
+	  },
+	
 	
     updateRows: function(newRow: text) {
        //this._pressData[rowID] = !this._pressData[rowID];
@@ -81,6 +100,8 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+	paddingLeft: 10,
+	paddingRight: 10,
   },
   centerText: {
     alignItems: 'center',
@@ -96,13 +117,11 @@ var styles = StyleSheet.create({
   scrollSpinner: {
     marginVertical: 20,
   },
-  rowSeparator: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    height: 1,
-    marginLeft: 4,
-  },
   rowSeparatorHide: {
     opacity: 0.0,
+  },
+  text: {
+	  fontSize: 20,
   },
 });
 
